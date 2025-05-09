@@ -5,6 +5,11 @@ public class UserInterface {
     private Dealership dealership;
     private Scanner scanner = new Scanner(System.in);
 
+    private void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
     public void display() {
         init();
         boolean running = true;
@@ -40,25 +45,41 @@ public class UserInterface {
     }
 
     private void displayMenu() {
-        System.out.println("\n===============================");
-        System.out.println("  Welcome to " + dealership.getName());
-        System.out.println("  Address: " + dealership.getAddress());
-        System.out.println("  Phone:   " + dealership.getPhone());
-        System.out.println("===============================\n");
-        System.out.println("\n--- Dealership Menu ---");
-        System.out.println("1 - Find vehicles within a price range");
-        System.out.println("2 - Find vehicles by make / model");
-        System.out.println("3 - Find vehicles by year range");
-        System.out.println("4 - Find vehicles by color");
-        System.out.println("5 - Find vehicles by mileage range");
-        System.out.println("6 - Find vehicles by type");
-        System.out.println("7 - List ALL vehicles");
-        System.out.println("8 - Add a vehicle (employee only)");
-        System.out.println("9 - Remove a vehicle (employee only)");
-        System.out.println("99 - Quit");
-        System.out.print("Enter your choice: ");
-    }
+        clearScreen();
 
+        // ANSI color codes
+        final String RESET  = "\u001B[0m";
+        final String CYAN   = "\u001B[36m";
+        final String YELLOW = "\u001B[33m";
+        final String GREEN  = "\u001B[32m";
+        final String PURPLE = "\u001B[35m";
+        final String BOLD   = "\u001B[1m";
+
+        System.out.println(PURPLE + BOLD + "╔══ ✰ ══ ✮ :: ✮ ══ ✰ ══╗" + RESET);
+        System.out.println(PURPLE + BOLD + "     D & B USED CARS     " + RESET);
+        System.out.println(PURPLE + BOLD + "╚══ ✰ ══ ✮ :: ✮ ══ ✰ ══╝" + RESET);
+
+        System.out.println(CYAN + "\n→ DEALERSHIP : " + RESET + dealership.getName());
+        System.out.println(CYAN + "→ ADDRESS    : " + RESET + dealership.getAddress());
+        System.out.println(CYAN + "→ PHONE      : " + RESET + dealership.getPhone());
+
+        System.out.println(YELLOW + "\n╔════════════════════════════════════════════════════╗");
+        System.out.println("║                    MAIN MENU                       ║");
+        System.out.println("╠════╦═══════════════════════════════════════════════╣" + RESET);
+        System.out.printf("%s║ %-2s ║ %-45s ║%s\n", YELLOW, "1",  "Search vehicles by price range", RESET);
+        System.out.printf("%s║ %-2s ║ %-45s ║%s\n", YELLOW, "2",  "Search by make and model", RESET);
+        System.out.printf("%s║ %-2s ║ %-45s ║%s\n", YELLOW, "3",  "Search by year range", RESET);
+        System.out.printf("%s║ %-2s ║ %-45s ║%s\n", YELLOW, "4",  "Search by color", RESET);
+        System.out.printf("%s║ %-2s ║ %-45s ║%s\n", YELLOW, "5",  "Search by mileage range", RESET);
+        System.out.printf("%s║ %-2s ║ %-45s ║%s\n", YELLOW, "6",  "Search by vehicle type", RESET);
+        System.out.printf("%s║ %-2s ║ %-45s ║%s\n", YELLOW, "7",  "List all vehicles", RESET);
+        System.out.printf("%s║ %-2s ║ %-45s ║%s\n", YELLOW, "8",  "Add a vehicle (EMPLOYEE ONLY)", RESET);
+        System.out.printf("%s║ %-2s ║ %-45s ║%s\n", YELLOW, "9",  "Remove a vehicle (EMPLOYEE ONLY)", RESET);
+        System.out.printf("%s║ %-2s ║ %-45s ║%s\n", YELLOW, "99", "Exit program", RESET);
+        System.out.println(YELLOW + "╚════╩═══════════════════════════════════════════════╝" + RESET);
+
+        System.out.print(GREEN + "\nSelect an option ➤ " + RESET);
+    }
     private void displayVehicles(List<Vehicle> vehicles) {
         if (vehicles == null || vehicles.isEmpty()) {
             System.out.println("No vehicles found.");
@@ -75,8 +96,6 @@ public class UserInterface {
                     v.getColor(), v.getOdometer(), v.getPrice());
         }
     }
-
-
     private void addVehicle() {
         int vin = promptInt("VIN");
         int year = promptInt("Year");
