@@ -5,11 +5,6 @@ public class UserInterface {
     private Dealership dealership;
     private Scanner scanner = new Scanner(System.in);
 
-    private void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
     public void display() {
         init();
         boolean running = true;
@@ -45,7 +40,6 @@ public class UserInterface {
     }
 
     private void displayMenu() {
-        clearScreen();
 
         // ANSI color codes
         final String RESET  = "\u001B[0m";
